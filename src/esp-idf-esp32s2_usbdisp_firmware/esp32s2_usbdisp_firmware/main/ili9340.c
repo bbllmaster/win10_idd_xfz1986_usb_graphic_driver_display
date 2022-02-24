@@ -601,9 +601,9 @@ void lcd_bitblt_dma(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t
 
     if(dev->_model == 0x9340 || dev->_model == 0x9341 ||dev->_model == 0x7789 ) {
         spi_master_write_comm_byte(dev, 0x2A);	// set column(x) address
-        spi_master_write_addr(dev, x1, x2 - 1);
+        spi_master_write_addr(dev, x1+dev->_offsetx, x2 - 1+dev->_offsetx);
         spi_master_write_comm_byte(dev, 0x2B);	// set Page(y) address
-        spi_master_write_addr(dev, y1, y2 - 1);
+        spi_master_write_addr(dev, y1+dev->_offsety, y2 - 1+dev->_offsety);
         spi_master_write_comm_byte(dev, 0x2C);	// Memory Write
         spi_master_write_colors_bytes_dma(dev, colors, size);
     }
@@ -620,9 +620,9 @@ void lcd_bitblt(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
  #endif
     if(dev->_model == 0x9340 || dev->_model == 0x9341 || dev->_model == 0x7789) {
         spi_master_write_comm_byte(dev, 0x2A);	// set column(x) address
-        spi_master_write_addr(dev, x1, x2 - 1);
+        spi_master_write_addr(dev, x1+dev->_offsetx, x2 - 1+dev->_offsetx);
         spi_master_write_comm_byte(dev, 0x2B);	// set Page(y) address
-        spi_master_write_addr(dev, y1, y2 - 1);
+        spi_master_write_addr(dev, y1+dev->_offsety, y2 - 1+dev->_offsety);
         spi_master_write_comm_byte(dev, 0x2C);	// Memory Write
         spi_master_write_colors_bytes(dev, colors, size);
     }
